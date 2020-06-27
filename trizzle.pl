@@ -65,3 +65,31 @@ rotarN(N, L1, L2) :-
 rotar("der", L, [T|H]) :- append(H, [T], L).
 rotar("izq", [H|T], L) :- append(T, [H], L).
 
+% rellenar(+Tablero_Entrada,-Tablero_Salida)
+% Tablero_Salida es resultado de rellenar las apariciones de "x" (casillas vacías) en Tablero_Entrada
+rellenar([],[]).
+rellenar([Lista_Head1|Listas1],[Lista_Head2|Listas2]):-
+    reemplazar_Xs(Lista_Head1,Lista_Head2),
+    rellenar(Listas1,Listas2).
+
+% getMamushkaRandom(-M)
+% Retorna una mamushka M de tamaño pequeño con color aleatorio
+% v = verde
+% a = azul
+% r = rojo
+getMamushkaRandom(Out):-
+    random(1,4,Tag),
+    nth0(Tag,[_X,v,a,r],Color),
+    atom_concat(Color,1,Out).
+
+% reemplazar_Xs(+ListaIn,-ListaOut)
+% ListaOut es resultado de reemplazar las apariciones de "x" (casillas vacías) en ListaIn,
+% por mamushkas pequeñas de color aleatorio
+reemplazar_Xs([], []). 
+reemplazar_Xs([O|T], [R|T2]) :-
+    O = x,
+    getMamushkaRandom(R),
+    reemplazar_Xs(T, T2).
+reemplazar_Xs([H|T], [H|T2]) :-
+    dif(H,x),
+    reemplazar_Xs(T, T2).
