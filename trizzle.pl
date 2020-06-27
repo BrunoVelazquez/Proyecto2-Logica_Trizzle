@@ -64,4 +64,3 @@ rotarN(N, L1, L2) :-
 
 rotar("der", L, [T|H]) :- append(H, [T], L).
 rotar("izq", [H|T], L) :- append(T, [H], L).
-
