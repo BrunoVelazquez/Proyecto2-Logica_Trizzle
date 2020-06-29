@@ -3,33 +3,45 @@
 % desplazar(+der, +Num, +Cant, +Tablero, -EvolTablero):
 % Predicado principal del juego, desplaza la fila o columna 
 % elegida en una cantidad de lugares hacia una direccion tambien elegida.
-desplazar(der, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
+desplazar(der, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
     moverFila(Num, Cant, Tablero, Tablero1),
-    append(Tablero1, [], Tablero2),
-    recorrerCol(Tablero2, Num, Tablero3),
-    burbujearTablero(Tablero3, Tablero4),
-    rellenar(Tablero4, Tablero5).
+    append(Tablero1, [], Aux),
+    recorrerCol(Aux, Num, Tablero2),
+    Tablero1 \= Tablero2,
+    burbujearTablero(Tablero2, Tablero3),
+    rellenar(Tablero3, Tablero4).
+desplazar(der, Num, Cant, Tablero, EvoTablero) :-
+    moverFila(Num, Cant, Tablero, EvoTablero).
 
-desplazar(izq, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
+desplazar(izq, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
     moverFila(Num, (-Cant), Tablero, Tablero1),
-    append(Tablero1, [], Tablero2),
-    recorrerCol(Tablero2, Num, Tablero3),
-    burbujearTablero(Tablero3, Tablero4),
-    rellenar(Tablero4, Tablero5).
+    append(Tablero1, [], Aux),
+    recorrerCol(Aux, Num, Tablero2),
+    Tablero1 \= Tablero2,
+    burbujearTablero(Tablero2, Tablero3),
+    rellenar(Tablero3, Tablero4).
+desplazar(izq, Num, Cant, Tablero, EvoTablero) :-
+    moverFila(Num, (-Cant), Tablero, EvoTablero).
 
-desplazar(arriba, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
+desplazar(arriba, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
     moverCol(Num, (-Cant), Tablero, Tablero1),
-    append(Tablero1, [], Tablero2),
-    recorrerFil(Tablero2, Num, Tablero3),
-    burbujearTablero(Tablero3, Tablero4),
-    rellenar(Tablero4, Tablero5).
+    append(Tablero1, [], Aux),
+    recorrerFil(Aux, Num, Tablero2),
+    Tablero1 \= Tablero2,
+    burbujearTablero(Tablero2, Tablero3),
+    rellenar(Tablero3, Tablero4).
+desplazar(arriba, Num, Cant, Tablero, EvoTablero) :-
+    moverCol(Num, (-Cant), Tablero, EvoTablero).
 
-desplazar(abajo, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
+desplazar(abajo, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
     moverCol(Num, Cant, Tablero, Tablero1),
-    append(Tablero1, [], Tablero2),
-    recorrerFil(Tablero2, Num, Tablero3),
-    burbujearTablero(Tablero3, Tablero4),
-    rellenar(Tablero4, Tablero5).
+    append(Tablero1, [], Aux),
+    recorrerFil(Aux, Num, Tablero2),
+    Tablero1 \= Tablero2,
+    burbujearTablero(Tablero2, Tablero3),
+    rellenar(Tablero3, Tablero4).
+desplazar(abajo, Num, Cant, Tablero, EvoTablero) :-
+    moverCol(Num, Cant, Tablero, EvoTablero).
 
 % moverCol(+N, +Cant, +Tablero, -D):
 % Desplaza la N-esima columna del tablero en una cant de posiciones, pueden ser arriba o abajo.
@@ -42,6 +54,7 @@ moverCol(N, Cant, Tablero, D) :-
 % Desplaza la N-esima fila del tablero en una cantidad de posiciones, puede ser izquierda o derecha.
 moverFila(N, Cant, [T|Ts], [T|D]) :-
     N > 0,
+    N < 5,
     N1 is N-1,
     moverFila(N1, Cant, Ts, D).
 moverFila(0, Cant, [T|Ts], D) :-
