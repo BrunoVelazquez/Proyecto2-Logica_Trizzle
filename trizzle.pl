@@ -12,10 +12,10 @@ desplazar(der, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
 
 desplazar(izq, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
     moverFila(Num, (-Cant), Tablero, Tablero1),
-    append(Tablero1, [], Aux),
-    recorrerCol(Aux, Num, Tablero2),
-    burbujearTablero(Tablero2, Tablero3),
-    rellenar(Tablero3, Tablero4).
+    append(Tablero1, [], Tablero2),
+    recorrerCol(Tablero2, Num, Tablero3),
+    burbujearTablero(Tablero3, Tablero4),
+    rellenar(Tablero4, Tablero5).
 
 desplazar(arriba, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
     moverCol(Num, (-Cant), Tablero, Tablero1),
@@ -116,8 +116,7 @@ eliminar_apariciones_x([T_in|Ts_in],[T_out|Ts_out]):-
 % transpose(+Matriz_entrada,-Matriz_salida)
 % Matriz_salida es la matriz traspuesta de Matriz_entrada
 %
-% Código extraído de la librería ...
-% PREGUNTAR??
+% Código extraído de la librería CLPFD
 transpose([], []).
 transpose([F|Fs], Ts):-
     transpose(F, [F|Fs], Ts).
