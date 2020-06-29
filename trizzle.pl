@@ -70,7 +70,7 @@ rotar("izq", [H|T], L) :- append(T, [H], L).
 % cayendo así las mamushkas hacia el fondo del tablero.
 burbujearTablero(TableroIn, TableroOut):-
     transpose(TableroIn,TableroTraspuesto),
-    eliminar(TableroTraspuesto,x,Tablero_sin_x),
+    eliminar_apariciones_x(TableroTraspuesto,Tablero_sin_x),
 	agregar_apariciones_x(Tablero_sin_x,Tablero_con_x),
     transpose(Tablero_con_x,TableroOut)
     ,!.
@@ -105,7 +105,7 @@ crear_lista_x(Tamaño,[x|Xs]):-
 	Tamaño1 is (Tamaño-1),
     crear_lista_x(Tamaño1,Xs).
 
-% eliminar(+Old,-New)
+% eliminar_apariciones_x(+Old,-New)
 % New es una lista de sublistas, tal que el elemento x es eliminado de todas las sublistas de la lista Old 
 eliminar_apariciones_x([],[]).
 eliminar_apariciones_x([T_in|Ts_in],[T_out|Ts_out]):-
