@@ -65,6 +65,74 @@ rotarN(N, L1, L2) :-
 rotar("der", L, [T|H]) :- append(H, [T], L).
 rotar("izq", [H|T], L) :- append(T, [H], L).
 
+% burbujearTablero(+Tablero_entrada,-Tablero_salida)
+% Tablero_salida es resultado de subir las apariciones de x (casillas vacías) en Tablero_entrada,
+% cayendo así las mamushkas hacia el fondo del tablero.
+burbujearTablero(TableroIn, TableroOut):-
+    transpose(TableroIn,TableroTraspuesto),
+    eliminar(TableroTraspuesto,x,Tablero_sin_x),
+	agregar_apariciones_x(Tablero_sin_x,Tablero_con_x),
+    transpose(Tablero_con_x,TableroOut)
+    ,!.
+/*
+ * burbujearTablero([[1,2,3,4,5],
+                  [6,7,8,9,10],
+                  [11,12,13,14,15],
+                  [16,17,18,19,20],
+                  [21,22,23,24,25]],X).*/
+
+% agregar_apariciones_X(+Tablero_entrada,-Tablero_salida)
+% Tablero_salida es resultado de agregar x's (casillas vacias) a Tablero_entrada,
+% tal que el tablero vuelva a tener una dimensión 5x5
+agregar_apariciones_x([],[]).
+agregar_apariciones_x([T_in|Ts_in],[T_out|Ts_out]):-
+    agregar_x(T_in,T_out),
+    agregar_apariciones_x(Ts_in,Ts_out).
+
+% agregar_x(+Lista_entrada,-Lista_salida)
+% Lista_salida es resultado de agregar al principio de Lista_entrada,
+% la cantidad de x's necesaria para que Lista_entrada tenga un tamaño de 5
+agregar_x(ListaIn,ListaOut):-
+    length(ListaIn,Length_in),
+    N is (5-Length_in),
+    crear_lista_x(N,Lista_X),
+    append(Lista_X,ListaIn,ListaOut).
+
+% crear_lista_X(+N,-Lista_salida)
+% Lista_salida es una lista compuesta de N x's
+crear_lista_x(0,[]):-!.
+crear_lista_x(Tamaño,[x|Xs]):-
+	Tamaño1 is (Tamaño-1),
+    crear_lista_x(Tamaño1,Xs).
+
+% eliminar(+Old,+Elemm,-New)
+% New es una lista de sublistas, tal que el elemento Elem es eliminado de todas las sublistas de la lista Old 
+eliminar([],_,[]):-!.   
+eliminar([X],X,[]):-!.
+eliminar([X|M],X,S):- eliminar(M,X,S),!.
+eliminar([R|M],X,S):- eliminar(R,X,T),eliminar(M,X,P),append([T], P, S).
+eliminar([R|M],X,S):- eliminar(M,X,T), append([R],T,S).
+
+/*-----------------------*/
+% transpose(+Matriz_entrada,-Matriz_salida)
+% Matriz_salida es la matriz traspuesta de Matriz_entrada
+%
+% Código extraído de la librería ...
+% PREGUNTAR??
+transpose([], []).
+transpose([F|Fs], Ts):-
+    transpose(F, [F|Fs], Ts).
+
+transpose([], _, []).
+transpose([_|Rs], Ms, [Ts|Tss]) :-
+    lists_firsts_rests(Ms, Ts, Ms1),
+    transpose(Rs, Ms1, Tss).
+
+lists_firsts_rests([], [], []).
+lists_firsts_rests([[F|Os]|Rest], [F|Fs], [Os|Oss]) :-
+    lists_firsts_rests(Rest, Fs, Oss).
+/*-----------------------*/
+
 % rellenar(+Tablero_Entrada,-Tablero_Salida)
 % Tablero_Salida es resultado de rellenar las apariciones de "x" (casillas vacías) en Tablero_Entrada
 rellenar([],[]).
