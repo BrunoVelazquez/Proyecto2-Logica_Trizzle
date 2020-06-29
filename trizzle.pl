@@ -107,11 +107,10 @@ crear_lista_x(Tamaño,[x|Xs]):-
 
 % eliminar(+Old,+Elemm,-New)
 % New es una lista de sublistas, tal que el elemento Elem es eliminado de todas las sublistas de la lista Old 
-eliminar([],_,[]):-!.   
-eliminar([X],X,[]):-!.
-eliminar([X|M],X,S):- eliminar(M,X,S),!.
-eliminar([R|M],X,S):- eliminar(R,X,T),eliminar(M,X,P),append([T], P, S).
-eliminar([R|M],X,S):- eliminar(M,X,T), append([R],T,S).
+eliminar_apariciones_x([],[]).
+eliminar_apariciones_x([T_in|Ts_in],[T_out|Ts_out]):-
+    delete(T_in,x,T_out),
+    eliminar_apariciones_x(Ts_in,Ts_out).
 
 /*-----------------------*/
 % transpose(+Matriz_entrada,-Matriz_salida)
@@ -147,7 +146,7 @@ rellenar([Lista_Head1|Listas1],[Lista_Head2|Listas2]):-
 % r = rojo
 getMamushkaRandom(Out):-
     random(1,4,Tag),
-    nth0(Tag,[_X,v,a,r],Color),
+    nth1(Tag,[v,a,r],Color),
     atom_concat(Color,1,Out).
 
 % reemplazar_Xs(+ListaIn,-ListaOut)
