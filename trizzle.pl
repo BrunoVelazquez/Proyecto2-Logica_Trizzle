@@ -3,33 +3,33 @@
 % desplazar(+der, +Num, +Cant, +Tablero, -EvolTablero):
 % Predicado principal del juego, desplaza la fila o columna 
 % elegida en una cantidad de lugares hacia una direccion tambien elegida.
-desplazar(der, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
+desplazar(der, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
     moverFila(Num, Cant, Tablero, Tablero1),
-    append(Tablero1, [], Aux),
-    recorrerCol(Aux, Num, Tablero2),
-    burbujearTablero(Tablero2, Tablero3),
-    rellenar(Tablero3, Tablero4).
+    append(Tablero1, [], Tablero2),
+    recorrerCol(Tablero2, Num, Tablero3),
+    burbujearTablero(Tablero3, Tablero4),
+    rellenar(Tablero4, Tablero5).
 
-desplazar(izq, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
+desplazar(izq, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
     moverFila(Num, (-Cant), Tablero, Tablero1),
     append(Tablero1, [], Aux),
     recorrerCol(Aux, Num, Tablero2),
     burbujearTablero(Tablero2, Tablero3),
     rellenar(Tablero3, Tablero4).
 
-desplazar(arriba, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
+desplazar(arriba, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
     moverCol(Num, (-Cant), Tablero, Tablero1),
-    append(Tablero1, [], Aux),
-    recorrerFil(Aux, Num, Tablero2),
-    burbujearTablero(Tablero2, Tablero3),
-    rellenar(Tablero3, Tablero4).
+    append(Tablero1, [], Tablero2),
+    recorrerFil(Tablero2, Num, Tablero3),
+    burbujearTablero(Tablero3, Tablero4),
+    rellenar(Tablero4, Tablero5).
 
-desplazar(abajo, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
+desplazar(abajo, Num, Cant, Tablero, [Tablero1, Tablero3, Tablero4, Tablero5]) :-
     moverCol(Num, Cant, Tablero, Tablero1),
-    append(Tablero1, [], Aux),
-    recorrerFil(Aux, Num, Tablero2),
-    burbujearTablero(Tablero2, Tablero3),
-    rellenar(Tablero3, Tablero4).
+    append(Tablero1, [], Tablero2),
+    recorrerFil(Tablero2, Num, Tablero3),
+    burbujearTablero(Tablero3, Tablero4),
+    rellenar(Tablero4, Tablero5).
 
 % moverCol(+N, +Cant, +Tablero, -D):
 % Desplaza la N-esima columna del tablero en una cant de posiciones, pueden ser arriba o abajo.
@@ -97,7 +97,7 @@ reemplazar_Xs([H|T], [H|T2]) :-
 % recorrerCol(+Tablero, +Principal, -Res):
 % Recorre todas las columnas del tablero, luego colapsa todas las mamushkas que pueda sobre el elemento Principal.
 recorrerCol(Tablero, Principal, Res):-
-    transpose(Tablero, TableroTransp),      %transpose/3 es un predicado de prolog
+    transpose(Tablero, TableroTransp),      
     recorrerFil(TableroTransp, Principal, Aux),
     transpose(Aux, Res).
 
