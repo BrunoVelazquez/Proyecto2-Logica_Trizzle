@@ -105,8 +105,8 @@ crear_lista_x(Tamaño,[x|Xs]):-
 	Tamaño1 is (Tamaño-1),
     crear_lista_x(Tamaño1,Xs).
 
-% eliminar(+Old,+Elemm,-New)
-% New es una lista de sublistas, tal que el elemento Elem es eliminado de todas las sublistas de la lista Old 
+% eliminar(+Old,-New)
+% New es una lista de sublistas, tal que el elemento x es eliminado de todas las sublistas de la lista Old 
 eliminar_apariciones_x([],[]).
 eliminar_apariciones_x([T_in|Ts_in],[T_out|Ts_out]):-
     delete(T_in,x,T_out),
