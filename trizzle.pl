@@ -1,5 +1,15 @@
 :- use_rendering(table).
 
+/*
+
+    SEGUNDO PROYECTO DE LÓGICA PARA CIENCIAS DE LA COMPUTACIÓN, PRIMER CUATRIMESTRE - AÑO 2020
+    
+    INTEGRANTES:
+        LORENZO, IVÁN GIOVANNI
+        VELAZQUEZ, BRUNO
+
+*/
+
 % desplazar(+der, +Num, +Cant, +Tablero, -EvolTablero):
 % Predicado principal del juego, desplaza la fila o columna 
 % elegida en una cantidad de lugares hacia una direccion tambien elegida.
@@ -95,12 +105,6 @@ burbujearTablero(TableroIn, TableroOut):-
 	agregar_apariciones_x(Tablero_sin_x,Tablero_con_x),
     traspuesta(Tablero_con_x,TableroOut)
     ,!.
-/*
- * burbujearTablero([[1,2,3,4,5],
-                  [6,7,8,9,10],
-                  [11,12,13,14,15],
-                  [16,17,18,19,20],
-                  [21,22,23,24,25]],X).*/
 
 % agregar_apariciones_X(+Tablero_entrada,-Tablero_salida)
 % Tablero_salida es resultado de agregar x's (casillas vacias) a Tablero_entrada,
