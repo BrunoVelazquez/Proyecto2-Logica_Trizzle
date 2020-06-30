@@ -54,9 +54,9 @@ desplazar(abajo, Num, Cant, Tablero, EvoTablero) :-
 % moverCol(+N, +Cant, +Tablero, -D):
 % Desplaza la N-esima columna del tablero en una cant de posiciones, pueden ser arriba o abajo.
 moverCol(N, Cant, Tablero, D) :-
-    transpose(Tablero, Trasp),
+    traspuesta(Tablero, Trasp),
     moverFila(N, Cant, Trasp, D1),
-    transpose(D1, D).
+    traspuesta(D1, D).
 
 % moverFila(+N, +Cant, +Tablero, -D):
 % Desplaza la N-esima fila del tablero en una cantidad de posiciones, puede ser izquierda o derecha.
@@ -90,10 +90,10 @@ rotar("izq", [H|T], L) :- append(T, [H], L).
 % Tablero_salida es resultado de subir las apariciones de x (casillas vacías) en Tablero_entrada,
 % cayendo así las mamushkas hacia el fondo del tablero.
 burbujearTablero(TableroIn, TableroOut):-
-    transpose(TableroIn,TableroTraspuesto),
+    traspuesta(TableroIn,TableroTraspuesto),
     eliminar_apariciones_x(TableroTraspuesto,Tablero_sin_x),
 	agregar_apariciones_x(Tablero_sin_x,Tablero_con_x),
-    transpose(Tablero_con_x,TableroOut)
+    traspuesta(Tablero_con_x,TableroOut)
     ,!.
 /*
  * burbujearTablero([[1,2,3,4,5],
@@ -133,24 +133,20 @@ eliminar_apariciones_x([T_in|Ts_in],[T_out|Ts_out]):-
     delete(T_in,x,T_out),
     eliminar_apariciones_x(Ts_in,Ts_out).
 
-/*-----------------------*/
-% transpose(+Matriz_entrada,-Matriz_salida)
+% traspuesta(+Matriz_entrada,-Matriz_salida)
 % Matriz_salida es la matriz traspuesta de Matriz_entrada
-%
-% Código extraído de la librería CLPFD
-transpose([], []).
-transpose([F|Fs], Ts):-
-    transpose(F, [F|Fs], Ts).
+traspuesta([], []).
+traspuesta([X|Xs], Ts):-
+    traspuestaAux1(X, [X|Xs], Ts).
 
-transpose([], _, []).
-transpose([_|Rs], Ms, [Ts|Tss]) :-
-    lists_firsts_rests(Ms, Ts, Ms1),
-    transpose(Rs, Ms1, Tss).
+traspuestaAux1([], _, []).
+traspuestaAux1([_|Xs], Ms, [Ts|Tss]) :-
+    traspuestaAux2(Ms, Ts, Ms1),
+    traspuestaAux1(Xs, Ms1, Tss).
 
-lists_firsts_rests([], [], []).
-lists_firsts_rests([[F|Os]|Rest], [F|Fs], [Os|Oss]) :-
-    lists_firsts_rests(Rest, Fs, Oss).
-/*-----------------------*/
+traspuestaAux2([], [], []).
+traspuestaAux2([[X|Os]|Rest], [X|Xs], [Os|Oss]) :-
+    traspuestaAux2(Rest, Xs, Oss).
 
 % rellenar(+Tablero_Entrada,-Tablero_Salida)
 % Tablero_Salida es resultado de rellenar las apariciones de "x" (casillas vacías) en Tablero_Entrada
@@ -184,9 +180,9 @@ reemplazar_Xs([H|T], [H|T2]) :-
 % recorrerCol(+Tablero, +Principal, -Res):
 % Recorre todas las columnas del tablero, luego colapsa todas las mamushkas que pueda sobre el elemento Principal.
 recorrerCol(Tablero, Principal, Res):-
-    transpose(Tablero, TableroTransp),      
+    traspuesta(Tablero, TableroTransp),      
     recorrerFil(TableroTransp, Principal, Aux),
-    transpose(Aux, Res).
+    traspuesta(Aux, Res).
 
 % recorrerFil(+Tablero, +Principa, -Res):
 % Recorre todas las filas del tablero, luego colapsa todas las mamushkas que pueda sobre el elemento Principal.
@@ -225,7 +221,7 @@ intercambiar([A | Tail], N, E, T):-
 % getCol(+Tablero, +N, +F):
 % Recibe como parametro una lista de listas (un tablero), una posición y almacena la columna en dicha posicion en la variable F.
 getCol(Tablero, N, F):-
-    transpose(Tablero, TableroTransp),
+    traspuesta(Tablero, TableroTransp),
     getFila(TableroTransp, N, F).
 
 % buscarCruzadas(+Tablero, +Principal, -Res):
