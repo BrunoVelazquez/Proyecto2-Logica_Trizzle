@@ -4,44 +4,52 @@
 % Predicado principal del juego, desplaza la fila o columna 
 % elegida en una cantidad de lugares hacia una direccion tambien elegida.
 desplazar(der, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
-    moverFila(Num, Cant, Tablero, Tablero1),
+    Nume is Num-1,
+    moverFila(Nume, Cant, Tablero, Tablero1),
     append(Tablero1, [], Aux),
-    recorrerCol(Aux, Num, Tablero2),
+    recorrerCol(Aux, Nume, Tablero2),
     Tablero1 \= Tablero2,
     burbujearTablero(Tablero2, Tablero3),
     rellenar(Tablero3, Tablero4).
 desplazar(der, Num, Cant, Tablero, EvoTablero) :-
-    moverFila(Num, Cant, Tablero, EvoTablero).
+    Nume is Num-1,
+    moverFila(Nume, Cant, Tablero, EvoTablero).
 
 desplazar(izq, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
-    moverFila(Num, (-Cant), Tablero, Tablero1),
+    Nume is Num-1,
+    moverFila(Nume, (-Cant), Tablero, Tablero1),
     append(Tablero1, [], Aux),
-    recorrerCol(Aux, Num, Tablero2),
+    recorrerCol(Aux, Nume, Tablero2),
     Tablero1 \= Tablero2,
     burbujearTablero(Tablero2, Tablero3),
     rellenar(Tablero3, Tablero4).
 desplazar(izq, Num, Cant, Tablero, EvoTablero) :-
-    moverFila(Num, (-Cant), Tablero, EvoTablero).
+    Nume is Num-1,
+    moverFila(Nume, (-Cant), Tablero, EvoTablero).
 
 desplazar(arriba, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
-    moverCol(Num, (-Cant), Tablero, Tablero1),
+    Nume is Num-1,
+    moverCol(Nume, (-Cant), Tablero, Tablero1),
     append(Tablero1, [], Aux),
-    recorrerFil(Aux, Num, Tablero2),
+    recorrerFil(Aux, Nume, Tablero2),
     Tablero1 \= Tablero2,
     burbujearTablero(Tablero2, Tablero3),
     rellenar(Tablero3, Tablero4).
 desplazar(arriba, Num, Cant, Tablero, EvoTablero) :-
-    moverCol(Num, (-Cant), Tablero, EvoTablero).
+    Nume is Num-1,
+    moverCol(Nume, (-Cant), Tablero, EvoTablero).
 
 desplazar(abajo, Num, Cant, Tablero, [Tablero1, Tablero2, Tablero3, Tablero4]) :-
-    moverCol(Num, Cant, Tablero, Tablero1),
+    Nume is Num-1,
+    moverCol(Nume, Cant, Tablero, Tablero1),
     append(Tablero1, [], Aux),
-    recorrerFil(Aux, Num, Tablero2),
+    recorrerFil(Aux, Nume, Tablero2),
     Tablero1 \= Tablero2,
     burbujearTablero(Tablero2, Tablero3),
     rellenar(Tablero3, Tablero4).
 desplazar(abajo, Num, Cant, Tablero, EvoTablero) :-
-    moverCol(Num, Cant, Tablero, EvoTablero).
+    Nume is Num-1,
+    moverCol(Nume, Cant, Tablero, EvoTablero).
 
 % moverCol(+N, +Cant, +Tablero, -D):
 % Desplaza la N-esima columna del tablero en una cant de posiciones, pueden ser arriba o abajo.
